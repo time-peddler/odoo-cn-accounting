@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- 经营活动 -->
+        <record id="cf_item_sales_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-OP-IN-01</field>
+            <field name="name">销售商品、提供劳务收到的现金</field>
+            <field name="category">operating</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="cf_item_tax_refund" model="account.cn.cash.flow.item">
+            <field name="code">CF-OP-IN-02</field>
+            <field name="name">收到的税费返还</field>
+            <field name="category">operating</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="cf_item_other_operating_in" model="account.cn.cash.flow.item">
+            <field name="code">CF-OP-IN-03</field>
+            <field name="name">收到其他与经营活动有关的现金</field>
+            <field name="category">operating</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="cf_item_purchase_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-OP-OUT-01</field>
+            <field name="name">购买商品、接受劳务支付的现金</field>
+            <field name="category">operating</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="cf_item_employee_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-OP-OUT-02</field>
+            <field name="name">支付给职工以及为职工支付的现金</field>
+            <field name="category">operating</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="cf_item_tax_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-OP-OUT-03</field>
+            <field name="name">支付的各项税费</field>
+            <field name="category">operating</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="cf_item_other_operating_out" model="account.cn.cash.flow.item">
+            <field name="code">CF-OP-OUT-04</field>
+            <field name="name">支付其他与经营活动有关的现金</field>
+            <field name="category">operating</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- 投资活动 -->
+        <record id="cf_item_investment_recovery" model="account.cn.cash.flow.item">
+            <field name="code">CF-INV-IN-01</field>
+            <field name="name">收回投资收到的现金</field>
+            <field name="category">investing</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">80</field>
+        </record>
+        <record id="cf_item_investment_income_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-INV-IN-02</field>
+            <field name="name">取得投资收益收到的现金</field>
+            <field name="category">investing</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">90</field>
+        </record>
+        <record id="cf_item_disposal_assets_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-INV-IN-03</field>
+            <field name="name">处置固定资产、无形资产和其他长期资产收回的现金净额</field>
+            <field name="category">investing</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">100</field>
+        </record>
+        <record id="cf_item_other_investing_in" model="account.cn.cash.flow.item">
+            <field name="code">CF-INV-IN-04</field>
+            <field name="name">收到其他与投资活动有关的现金</field>
+            <field name="category">investing</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">110</field>
+        </record>
+        <record id="cf_item_build_assets_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-INV-OUT-01</field>
+            <field name="name">购建固定资产、无形资产和其他长期资产支付的现金</field>
+            <field name="category">investing</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">120</field>
+        </record>
+        <record id="cf_item_investment_pay_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-INV-OUT-02</field>
+            <field name="name">投资支付的现金</field>
+            <field name="category">investing</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">130</field>
+        </record>
+        <record id="cf_item_other_investing_out" model="account.cn.cash.flow.item">
+            <field name="code">CF-INV-OUT-03</field>
+            <field name="name">支付其他与投资活动有关的现金</field>
+            <field name="category">investing</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">140</field>
+        </record>
+
+        <!-- 筹资活动 -->
+        <record id="cf_item_capital_raised_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-FIN-IN-01</field>
+            <field name="name">吸收投资收到的现金</field>
+            <field name="category">financing</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">150</field>
+        </record>
+        <record id="cf_item_borrowing_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-FIN-IN-02</field>
+            <field name="name">取得借款收到的现金</field>
+            <field name="category">financing</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">160</field>
+        </record>
+        <record id="cf_item_other_financing_in" model="account.cn.cash.flow.item">
+            <field name="code">CF-FIN-IN-03</field>
+            <field name="name">收到其他与筹资活动有关的现金</field>
+            <field name="category">financing</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">170</field>
+        </record>
+        <record id="cf_item_debt_repayment_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-FIN-OUT-01</field>
+            <field name="name">偿还债务支付的现金</field>
+            <field name="category">financing</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">180</field>
+        </record>
+        <record id="cf_item_dividend_interest_cash" model="account.cn.cash.flow.item">
+            <field name="code">CF-FIN-OUT-02</field>
+            <field name="name">分配股利、利润或偿付利息支付的现金</field>
+            <field name="category">financing</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">190</field>
+        </record>
+        <record id="cf_item_other_financing_out" model="account.cn.cash.flow.item">
+            <field name="code">CF-FIN-OUT-03</field>
+            <field name="name">支付其他与筹资活动有关的现金</field>
+            <field name="category">financing</field>
+            <field name="flow_direction">outflow</field>
+            <field name="sequence">200</field>
+        </record>
+
+        <!-- 汇率变动影响 -->
+        <record id="cf_item_fx_effect" model="account.cn.cash.flow.item">
+            <field name="code">CF-FX-01</field>
+            <field name="name">汇率变动对现金及现金等价物的影响</field>
+            <field name="category">fx</field>
+            <field name="flow_direction">inflow</field>
+            <field name="sequence">210</field>
+        </record>
+
+    </data>
+</odoo>

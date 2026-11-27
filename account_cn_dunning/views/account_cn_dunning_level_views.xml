@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_dunning_level_list" model="ir.ui.view">
+        <field name="name">account.cn.dunning.level.list</field>
+        <field name="model">account.cn.dunning.level</field>
+        <field name="arch" type="xml">
+            <list string="催收等级" editable="bottom">
+                <field name="delay"/>
+                <field name="name"/>
+                <field name="mail_template_id"/>
+                <field name="notify_salesperson"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cn_dunning_level_form" model="ir.ui.view">
+        <field name="name">account.cn.dunning.level.form</field>
+        <field name="model">account.cn.dunning.level</field>
+        <field name="arch" type="xml">
+            <form string="催收等级">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="delay"/>
+                        <field name="mail_template_id"/>
+                        <field name="notify_salesperson"/>
+                        <field name="company_id" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_dunning_level" model="ir.actions.act_window">
+        <field name="name">催收等级</field>
+        <field name="res_model">account.cn.dunning.level</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_account_cn_dunning_level"
+              name="催收等级"
+              parent="account.account_account_menu"
+              action="action_account_cn_dunning_level"
+              groups="account.group_account_manager"
+              sequence="25"/>
+
+</odoo>

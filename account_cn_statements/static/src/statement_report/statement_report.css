@@ -1,0 +1,39 @@
+.o_cn_statement_report {
+    height: 100%;
+    overflow: auto;
+    background: var(--o-view-background-color, #fff);
+}
+
+.o_cn_statement_body {
+    padding: 24px 32px;
+}
+
+.o_cn_statement_table {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.o_cn_statement_table th,
+.o_cn_statement_table td {
+    padding: 4px 12px;
+    white-space: nowrap;
+}
+
+.o_cn_statement_table th:not(:first-child),
+.o_cn_statement_table td:not(:first-child) {
+    width: 180px;
+}
+
+.o_cn_statement_subtotal td {
+    font-weight: 600;
+    border-top: 1px solid #999;
+}
+
+.o_cn_statement_link {
+    cursor: pointer;
+    color: var(--o-brand-primary, #714B67);
+}
+
+.o_cn_statement_link:hover {
+    text-decoration: underline;
+}

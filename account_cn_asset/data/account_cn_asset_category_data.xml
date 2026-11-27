@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- 每次安装/升级都会重新执行，按 l10n_cn 科目表自动创建/刷新六个标准资产类别 -->
+        <function model="account.cn.asset.category" name="_cn_create_default_categories"/>
+    </data>
+</odoo>

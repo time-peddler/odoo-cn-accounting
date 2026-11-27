@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_move_filter_cn_review" model="ir.ui.view">
+        <field name="name">account.move.select.cn.review</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <filter name="unposted" position="after">
+                <filter string="待审核" name="cn_to_review"
+                        domain="[('cn_review_required', '=', True), ('cn_review_state', '=', 'to_review')]"
+                        help="需要审核但尚未审核的记账凭证"/>
+                <filter string="已审核" name="cn_reviewed"
+                        domain="[('cn_review_required', '=', True), ('cn_review_state', '=', 'reviewed')]"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

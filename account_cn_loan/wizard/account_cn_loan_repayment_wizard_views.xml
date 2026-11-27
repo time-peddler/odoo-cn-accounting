@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_loan_repayment_wizard_form" model="ir.ui.view">
+        <field name="name">account.cn.loan.repayment.wizard.form</field>
+        <field name="model">account.cn.loan.repayment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="批量计提还本付息">
+                <group>
+                    <field name="date"/>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom" create="0" delete="0">
+                        <field name="loan_id" readonly="1"/>
+                        <field name="repayment_method" readonly="1"/>
+                        <field name="preview_principal"/>
+                        <field name="preview_interest"/>
+                        <field name="currency_id" column_invisible="1"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_confirm" type="object" string="确认计提" class="btn-primary"/>
+                    <button string="取消" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_loan_repayment_wizard" model="ir.actions.act_window">
+        <field name="name">批量计提还本付息</field>
+        <field name="res_model">account.cn.loan.repayment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_cn_loan_repayment_wizard"
+              name="批量计提还本付息"
+              parent="menu_cn_loan_root"
+              action="action_account_cn_loan_repayment_wizard"
+              sequence="2"/>
+
+</odoo>

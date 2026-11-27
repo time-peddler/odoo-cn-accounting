@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_cn_income_tax_prepayment_invoice,account.cn.income.tax.prepayment.invoice,model_account_cn_income_tax_prepayment,account.group_account_invoice,1,0,0,0
+access_account_cn_income_tax_prepayment_manager,account.cn.income.tax.prepayment.manager,model_account_cn_income_tax_prepayment,account.group_account_manager,1,1,1,1

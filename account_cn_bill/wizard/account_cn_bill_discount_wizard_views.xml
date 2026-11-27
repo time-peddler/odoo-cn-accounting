@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_bill_discount_wizard_form" model="ir.ui.view">
+        <field name="name">account.cn.bill.discount.wizard.form</field>
+        <field name="model">account.cn.bill.discount.wizard</field>
+        <field name="arch" type="xml">
+            <form string="票据贴现">
+                <group>
+                    <field name="bill_id" invisible="1"/>
+                    <field name="discount_date"/>
+                    <field name="discount_interest"/>
+                    <field name="net_proceeds" readonly="1"/>
+                    <field name="bank_journal_id"/>
+                    <field name="treatment"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="确认贴现" class="btn-primary"/>
+                    <button string="取消" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

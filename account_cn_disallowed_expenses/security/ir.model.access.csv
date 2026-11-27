@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_cn_disallowed_expense_category_invoice,account.cn.disallowed.expense.category.invoice,model_account_cn_disallowed_expense_category,account.group_account_invoice,1,0,0,0
+access_account_cn_disallowed_expense_category_manager,account.cn.disallowed.expense.category.manager,model_account_cn_disallowed_expense_category,account.group_account_manager,1,1,1,1
+access_account_cn_disallowed_expense_report,account.cn.disallowed.expense.report,model_account_cn_disallowed_expense_report,account.group_account_invoice,1,0,0,0

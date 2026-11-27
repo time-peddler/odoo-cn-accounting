@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_cn_tax_return" model="ir.ui.view">
+        <field name="name">res.company.form.cn.tax.return</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <page name="general_info" position="after">
+                <page string="增值税及附加税费" name="cn_tax_return">
+                    <group>
+                        <field name="cn_urban_maintenance_tax_rate"/>
+                        <field name="cn_education_surcharge_rate"/>
+                        <field name="cn_local_education_surcharge_rate"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>

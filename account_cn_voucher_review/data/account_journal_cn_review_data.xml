@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- 每次安装/升级都会重新执行：把"杂项/转账"类日记账默认打开审核开关，
+             否则这个模块在没有人工配置的情况下永远不会对任何凭证生效。 -->
+        <function model="account.journal" name="_cn_enable_review_for_general_journals"/>
+    </data>
+</odoo>

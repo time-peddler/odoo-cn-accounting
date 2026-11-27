@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="statement_balance_sheet" model="account.cn.statement">
+            <field name="name">资产负债表</field>
+            <field name="code">balance_sheet</field>
+        </record>
+
+        <!-- ============ 资产 ============ -->
+        <record id="bs_sec_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="sequence">10</field>
+            <field name="code">ASSETS</field>
+            <field name="name">资产</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="bs_sec_current_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_assets"/>
+            <field name="sequence">10</field>
+            <field name="code">CURRENT_ASSETS_SEC</field>
+            <field name="name">流动资产：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="bs_monetary_funds" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">10</field>
+            <field name="code">MONETARY_FUNDS</field>
+            <field name="name">货币资金</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1001,1002,1012</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_trading_fin_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">20</field>
+            <field name="code">TRADING_FIN_ASSETS</field>
+            <field name="name">交易性金融资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1101,1102</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_notes_receivable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">30</field>
+            <field name="code">NOTES_RECEIVABLE</field>
+            <field name="name">应收票据</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1121</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_accounts_receivable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">40</field>
+            <field name="code">ACCOUNTS_RECEIVABLE</field>
+            <field name="name">应收账款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1122,1231.02</field>
+            <field name="balance_side">debit</field>
+            <field name="note">已扣除坏账准备</field>
+        </record>
+        <record id="bs_receivables_financing" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">50</field>
+            <field name="code">RECEIVABLES_FINANCING</field>
+            <field name="name">应收款项融资</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1124</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_prepayments" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">60</field>
+            <field name="code">PREPAYMENTS</field>
+            <field name="name">预付账款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1123,1231.03</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_other_receivables" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">70</field>
+            <field name="code">OTHER_RECEIVABLES</field>
+            <field name="name">其他应收款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1221,1131,1132,1223,1231.04,1231.05,1231.06,1231.07,1231.08</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_inventory" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">80</field>
+            <field name="code">INVENTORY</field>
+            <field name="name">存货</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1401-1408,1411,1421,1431,1441,1451,1471</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_contract_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">90</field>
+            <field name="code">CONTRACT_ASSETS</field>
+            <field name="name">合同资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1481</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_held_for_sale_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">100</field>
+            <field name="code">HELD_FOR_SALE_ASSETS</field>
+            <field name="name">持有待售资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1491,1492</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_current_portion_noncurrent_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">110</field>
+            <field name="code">CURRENT_PORTION_NONCURRENT_ASSETS</field>
+            <field name="name">一年内到期的非流动资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1493</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_other_current_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_assets"/>
+            <field name="sequence">120</field>
+            <field name="code">OTHER_CURRENT_ASSETS</field>
+            <field name="name">其他流动资产</field>
+            <field name="line_type">detail</field>
+            <field name="balance_side">debit</field>
+            <field name="note">标准科目表未提供对应科目，如有需要请在技术设置中补充科目编码</field>
+        </record>
+        <record id="bs_current_assets_total" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_assets"/>
+            <field name="sequence">130</field>
+            <field name="code">CURRENT_ASSETS</field>
+            <field name="name">流动资产合计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">MONETARY_FUNDS + TRADING_FIN_ASSETS + NOTES_RECEIVABLE + ACCOUNTS_RECEIVABLE + RECEIVABLES_FINANCING + PREPAYMENTS + OTHER_RECEIVABLES + INVENTORY + CONTRACT_ASSETS + HELD_FOR_SALE_ASSETS + CURRENT_PORTION_NONCURRENT_ASSETS + OTHER_CURRENT_ASSETS</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="bs_sec_noncurrent_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_assets"/>
+            <field name="sequence">140</field>
+            <field name="code">NONCURRENT_ASSETS_SEC</field>
+            <field name="name">非流动资产：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="bs_debt_investments" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">10</field>
+            <field name="code">DEBT_INVESTMENTS</field>
+            <field name="name">债权投资</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1504</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_other_debt_investments" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">20</field>
+            <field name="code">OTHER_DEBT_INVESTMENTS</field>
+            <field name="name">其他债权投资</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1505</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_long_term_receivables" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">30</field>
+            <field name="code">LONG_TERM_RECEIVABLES</field>
+            <field name="name">长期应收款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1531,1532</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_long_term_equity_investments" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">40</field>
+            <field name="code">LONG_TERM_EQUITY_INVESTMENTS</field>
+            <field name="name">长期股权投资</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1511,1512</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_other_equity_instrument_investments" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">50</field>
+            <field name="code">OTHER_EQUITY_INSTRUMENT_INVESTMENTS</field>
+            <field name="name">其他权益工具投资</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1513</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_other_noncurrent_fin_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">60</field>
+            <field name="code">OTHER_NONCURRENT_FIN_ASSETS</field>
+            <field name="name">其他非流动金融资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1501,1502,1503</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_investment_property" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">70</field>
+            <field name="code">INVESTMENT_PROPERTY</field>
+            <field name="name">投资性房地产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1521</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_fixed_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">80</field>
+            <field name="code">FIXED_ASSETS</field>
+            <field name="name">固定资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1601,1602,1603,1606</field>
+            <field name="balance_side">debit</field>
+            <field name="note">已扣除累计折旧及减值准备</field>
+        </record>
+        <record id="bs_construction_in_progress" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">90</field>
+            <field name="code">CONSTRUCTION_IN_PROGRESS</field>
+            <field name="name">在建工程</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1604,1605</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_productive_biological_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">100</field>
+            <field name="code">PRODUCTIVE_BIOLOGICAL_ASSETS</field>
+            <field name="name">生产性生物资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1621,1622,1623</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_oil_gas_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">110</field>
+            <field name="code">OIL_GAS_ASSETS</field>
+            <field name="name">油气资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1631,1632</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_right_of_use_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">120</field>
+            <field name="code">RIGHT_OF_USE_ASSETS</field>
+            <field name="name">使用权资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1704,1705,1706</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_intangible_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">130</field>
+            <field name="code">INTANGIBLE_ASSETS</field>
+            <field name="name">无形资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1701,1702,1703</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_development_expenditure" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">140</field>
+            <field name="code">DEVELOPMENT_EXPENDITURE</field>
+            <field name="name">开发支出</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1731</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_goodwill" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">150</field>
+            <field name="code">GOODWILL</field>
+            <field name="name">商誉</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1711</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_long_term_deferred_expenses" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">160</field>
+            <field name="code">LONG_TERM_DEFERRED_EXPENSES</field>
+            <field name="name">长期待摊费用</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1801</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_deferred_tax_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">170</field>
+            <field name="code">DEFERRED_TAX_ASSETS</field>
+            <field name="name">递延所得税资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1811</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_other_noncurrent_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_assets"/>
+            <field name="sequence">180</field>
+            <field name="code">OTHER_NONCURRENT_ASSETS</field>
+            <field name="name">其他非流动资产</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1541,1611,1901</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_noncurrent_assets_total" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_assets"/>
+            <field name="sequence">190</field>
+            <field name="code">NONCURRENT_ASSETS</field>
+            <field name="name">非流动资产合计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">DEBT_INVESTMENTS + OTHER_DEBT_INVESTMENTS + LONG_TERM_RECEIVABLES + LONG_TERM_EQUITY_INVESTMENTS + OTHER_EQUITY_INSTRUMENT_INVESTMENTS + OTHER_NONCURRENT_FIN_ASSETS + INVESTMENT_PROPERTY + FIXED_ASSETS + CONSTRUCTION_IN_PROGRESS + PRODUCTIVE_BIOLOGICAL_ASSETS + OIL_GAS_ASSETS + RIGHT_OF_USE_ASSETS + INTANGIBLE_ASSETS + DEVELOPMENT_EXPENDITURE + GOODWILL + LONG_TERM_DEFERRED_EXPENSES + DEFERRED_TAX_ASSETS + OTHER_NONCURRENT_ASSETS</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="bs_total_assets" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="sequence">200</field>
+            <field name="code">TOTAL_ASSETS</field>
+            <field name="name">资产总计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">CURRENT_ASSETS + NONCURRENT_ASSETS</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <!-- ============ 负债 ============ -->
+        <record id="bs_sec_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="sequence">210</field>
+            <field name="code">LIABILITIES</field>
+            <field name="name">负债</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="bs_sec_current_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_liabilities"/>
+            <field name="sequence">10</field>
+            <field name="code">CURRENT_LIAB_SEC</field>
+            <field name="name">流动负债：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="bs_short_term_loans" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">10</field>
+            <field name="code">SHORT_TERM_LOANS</field>
+            <field name="name">短期借款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2001</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_trading_fin_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">20</field>
+            <field name="code">TRADING_FIN_LIABILITIES</field>
+            <field name="name">交易性金融负债</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2101,2112</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_notes_payable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">30</field>
+            <field name="code">NOTES_PAYABLE</field>
+            <field name="name">应付票据</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2201</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_accounts_payable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">40</field>
+            <field name="code">ACCOUNTS_PAYABLE</field>
+            <field name="name">应付账款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2202</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_receipts_in_advance" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">50</field>
+            <field name="code">RECEIPTS_IN_ADVANCE</field>
+            <field name="name">预收账款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2203</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_contract_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">60</field>
+            <field name="code">CONTRACT_LIABILITIES</field>
+            <field name="name">合同负债</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2204</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_employee_benefits_payable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">70</field>
+            <field name="code">EMPLOYEE_BENEFITS_PAYABLE</field>
+            <field name="name">应付职工薪酬</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2211</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_taxes_payable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">80</field>
+            <field name="code">TAXES_PAYABLE</field>
+            <field name="name">应交税费</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2221</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_interest_payable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">90</field>
+            <field name="code">INTEREST_PAYABLE</field>
+            <field name="name">应付利息</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2231</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_dividends_payable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">100</field>
+            <field name="code">DIVIDENDS_PAYABLE</field>
+            <field name="name">应付股利</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2232</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_other_payables" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">110</field>
+            <field name="code">OTHER_PAYABLES</field>
+            <field name="name">其他应付款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2241</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_held_for_sale_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">120</field>
+            <field name="code">HELD_FOR_SALE_LIABILITIES</field>
+            <field name="name">持有待售负债</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2245</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_current_portion_noncurrent_liab" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">130</field>
+            <field name="code">CURRENT_PORTION_NONCURRENT_LIAB</field>
+            <field name="name">一年内到期的非流动负债</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2402</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_other_current_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_current_liabilities"/>
+            <field name="sequence">140</field>
+            <field name="code">OTHER_CURRENT_LIABILITIES</field>
+            <field name="name">其他流动负债</field>
+            <field name="line_type">detail</field>
+            <field name="balance_side">credit</field>
+            <field name="note">标准科目表未提供对应科目，如有需要请在技术设置中补充科目编码</field>
+        </record>
+        <record id="bs_current_liabilities_total" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_liabilities"/>
+            <field name="sequence">150</field>
+            <field name="code">CURRENT_LIABILITIES</field>
+            <field name="name">流动负债合计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">SHORT_TERM_LOANS + TRADING_FIN_LIABILITIES + NOTES_PAYABLE + ACCOUNTS_PAYABLE + RECEIPTS_IN_ADVANCE + CONTRACT_LIABILITIES + EMPLOYEE_BENEFITS_PAYABLE + TAXES_PAYABLE + INTEREST_PAYABLE + DIVIDENDS_PAYABLE + OTHER_PAYABLES + HELD_FOR_SALE_LIABILITIES + CURRENT_PORTION_NONCURRENT_LIAB + OTHER_CURRENT_LIABILITIES</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="bs_sec_noncurrent_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_liabilities"/>
+            <field name="sequence">160</field>
+            <field name="code">NONCURRENT_LIAB_SEC</field>
+            <field name="name">非流动负债：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="bs_long_term_loans" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">10</field>
+            <field name="code">LONG_TERM_LOANS</field>
+            <field name="name">长期借款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2501</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_bonds_payable" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">20</field>
+            <field name="code">BONDS_PAYABLE</field>
+            <field name="name">应付债券</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2502</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_lease_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">30</field>
+            <field name="code">LEASE_LIABILITIES</field>
+            <field name="name">租赁负债</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2510</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_long_term_payables" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">40</field>
+            <field name="code">LONG_TERM_PAYABLES</field>
+            <field name="name">长期应付款</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2701,2702,2711</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_provisions" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">50</field>
+            <field name="code">PROVISIONS</field>
+            <field name="name">预计负债</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2801</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_deferred_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">60</field>
+            <field name="code">DEFERRED_INCOME</field>
+            <field name="name">递延收益</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2401</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_deferred_tax_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">70</field>
+            <field name="code">DEFERRED_TAX_LIABILITIES</field>
+            <field name="name">递延所得税负债</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">2901</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_other_noncurrent_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_noncurrent_liabilities"/>
+            <field name="sequence">80</field>
+            <field name="code">OTHER_NONCURRENT_LIABILITIES</field>
+            <field name="name">其他非流动负债</field>
+            <field name="line_type">detail</field>
+            <field name="balance_side">credit</field>
+            <field name="note">标准科目表未提供对应科目，如有需要请在技术设置中补充科目编码</field>
+        </record>
+        <record id="bs_noncurrent_liabilities_total" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_liabilities"/>
+            <field name="sequence">90</field>
+            <field name="code">NONCURRENT_LIABILITIES</field>
+            <field name="name">非流动负债合计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">LONG_TERM_LOANS + BONDS_PAYABLE + LEASE_LIABILITIES + LONG_TERM_PAYABLES + PROVISIONS + DEFERRED_INCOME + DEFERRED_TAX_LIABILITIES + OTHER_NONCURRENT_LIABILITIES</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="bs_total_liabilities" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="sequence">220</field>
+            <field name="code">TOTAL_LIABILITIES</field>
+            <field name="name">负债合计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">CURRENT_LIABILITIES + NONCURRENT_LIABILITIES</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <!-- ============ 所有者权益 ============ -->
+        <record id="bs_sec_equity" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="sequence">230</field>
+            <field name="code">EQUITY_SEC</field>
+            <field name="name">所有者权益（或股东权益）：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="bs_paid_in_capital" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">10</field>
+            <field name="code">PAID_IN_CAPITAL</field>
+            <field name="name">实收资本（或股本）</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4001</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_other_equity_instruments" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">20</field>
+            <field name="code">OTHER_EQUITY_INSTRUMENTS</field>
+            <field name="name">其他权益工具</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4106</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_capital_reserve" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">30</field>
+            <field name="code">CAPITAL_RESERVE</field>
+            <field name="name">资本公积</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4002</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_treasury_stock" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">40</field>
+            <field name="code">TREASURY_STOCK</field>
+            <field name="name">减：库存股</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4201</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="bs_other_comprehensive_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">50</field>
+            <field name="code">OTHER_COMPREHENSIVE_INCOME</field>
+            <field name="name">其他综合收益</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4003</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_special_reserve" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">60</field>
+            <field name="code">SPECIAL_RESERVE</field>
+            <field name="name">专项储备</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4301</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_surplus_reserve" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">70</field>
+            <field name="code">SURPLUS_RESERVE</field>
+            <field name="name">盈余公积</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4101,4102</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_undistributed_profit" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">80</field>
+            <field name="code">UNDISTRIBUTED_PROFIT</field>
+            <field name="name">未分配利润</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4103,4104</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="bs_total_equity" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="parent_id" ref="bs_sec_equity"/>
+            <field name="sequence">90</field>
+            <field name="code">TOTAL_EQUITY</field>
+            <field name="name">所有者权益（或股东权益）合计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">PAID_IN_CAPITAL + OTHER_EQUITY_INSTRUMENTS + CAPITAL_RESERVE - TREASURY_STOCK + OTHER_COMPREHENSIVE_INCOME + SPECIAL_RESERVE + SURPLUS_RESERVE + UNDISTRIBUTED_PROFIT</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="bs_total_liab_equity" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_balance_sheet"/>
+            <field name="sequence">240</field>
+            <field name="code">TOTAL_LIAB_EQUITY</field>
+            <field name="name">负债和所有者权益（或股东权益）总计</field>
+            <field name="line_type">formula</field>
+            <field name="formula">TOTAL_LIABILITIES + TOTAL_EQUITY</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+    </data>
+</odoo>

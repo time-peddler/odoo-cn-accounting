@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_asset_transfer_list" model="ir.ui.view">
+        <field name="name">account.cn.asset.transfer.list</field>
+        <field name="model">account.cn.asset.transfer</field>
+        <field name="arch" type="xml">
+            <list string="固定资产调拨记录">
+                <field name="date"/>
+                <field name="asset_id"/>
+                <field name="old_department_id"/>
+                <field name="new_department_id"/>
+                <field name="reason"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cn_asset_transfer_form" model="ir.ui.view">
+        <field name="name">account.cn.asset.transfer.form</field>
+        <field name="model">account.cn.asset.transfer</field>
+        <field name="arch" type="xml">
+            <form string="固定资产调拨">
+                <group>
+                    <field name="asset_id"/>
+                    <field name="date"/>
+                    <field name="old_department_id" readonly="1"/>
+                    <field name="new_department_id"/>
+                    <field name="reason"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_asset_transfer" model="ir.actions.act_window">
+        <field name="name">固定资产调拨</field>
+        <field name="res_model">account.cn.asset.transfer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

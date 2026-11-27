@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_period_closing_form" model="ir.ui.view">
+        <field name="name">account.cn.period.closing.form</field>
+        <field name="model">account.cn.period.closing</field>
+        <field name="arch" type="xml">
+            <form string="期末结转损益">
+                <header>
+                    <button name="action_generate" type="object" string="生成结转凭证"
+                            class="btn-primary" invisible="move_id or state != 'draft'"/>
+                    <button name="action_post" type="object" string="过账"
+                            class="btn-primary" invisible="not move_id or state != 'draft'"/>
+                    <button name="action_advance_lock_date" type="object" string="顺延锁账日期"
+                            invisible="state != 'posted'"/>
+                    <button name="action_reverse" type="object" string="反结账"
+                            confirm="确认要对本次结转做反结账（红字冲销）吗？"
+                            invisible="state != 'posted'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True}"/>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="move_id" readonly="1"/>
+                            <field name="reversal_move_id" readonly="1" invisible="not reversal_move_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_cn_period_closing_list" model="ir.ui.view">
+        <field name="name">account.cn.period.closing.list</field>
+        <field name="model">account.cn.period.closing</field>
+        <field name="arch" type="xml">
+            <list string="期末结转损益">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="move_id"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'posted'"
+                       decoration-muted="state == 'reversed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_account_cn_period_closing" model="ir.actions.act_window">
+        <field name="name">期末结转损益</field>
+        <field name="res_model">account.cn.period.closing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_account_cn_period_closing"
+              name="期末结转损益"
+              parent="account.account_closing_menu"
+              action="action_account_cn_period_closing"
+              groups="account.group_account_invoice"
+              sequence="10"/>
+
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_cn_statement_invoice,account.cn.statement.invoice,model_account_cn_statement,account.group_account_invoice,1,0,0,0
+access_account_cn_statement_manager,account.cn.statement.manager,model_account_cn_statement,account.group_account_manager,1,1,1,1
+access_account_cn_statement_line_invoice,account.cn.statement.line.invoice,model_account_cn_statement_line,account.group_account_invoice,1,0,0,0
+access_account_cn_statement_line_manager,account.cn.statement.line.manager,model_account_cn_statement_line,account.group_account_manager,1,1,1,1
+access_account_cn_cash_flow_item_invoice,account.cn.cash.flow.item.invoice,model_account_cn_cash_flow_item,account.group_account_invoice,1,0,0,0
+access_account_cn_cash_flow_item_manager,account.cn.cash.flow.item.manager,model_account_cn_cash_flow_item,account.group_account_manager,1,1,1,1

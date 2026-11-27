@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_disallowed_expense_category_list" model="ir.ui.view">
+        <field name="name">account.cn.disallowed.expense.category.list</field>
+        <field name="model">account.cn.disallowed.expense.category</field>
+        <field name="arch" type="xml">
+            <list string="纳税调整类别">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="limit_type"/>
+                <field name="deductible_rate"/>
+                <field name="revenue_cap_rate"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cn_disallowed_expense_category_form" model="ir.ui.view">
+        <field name="name">account.cn.disallowed.expense.category.form</field>
+        <field name="model">account.cn.disallowed.expense.category</field>
+        <field name="arch" type="xml">
+            <form string="纳税调整类别">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="limit_type"/>
+                            <field name="deductible_rate" invisible="limit_type == 'full'"/>
+                            <field name="revenue_cap_rate" invisible="limit_type != 'rate_and_revenue_cap'"/>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="适用科目" name="accounts">
+                            <field name="account_ids">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_disallowed_expense_category" model="ir.actions.act_window">
+        <field name="name">纳税调整类别</field>
+        <field name="res_model">account.cn.disallowed.expense.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_account_cn_disallowed_expense_category"
+              name="纳税调整类别"
+              parent="account.account_reports_taxes_and_fiscal_menu"
+              action="action_account_cn_disallowed_expense_category"
+              groups="account.group_account_manager"
+              sequence="31"/>
+
+</odoo>

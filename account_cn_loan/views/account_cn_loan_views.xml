@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_loan_list" model="ir.ui.view">
+        <field name="name">account.cn.loan.list</field>
+        <field name="model">account.cn.loan</field>
+        <field name="arch" type="xml">
+            <list string="借款">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="loan_type"/>
+                <field name="repayment_method"/>
+                <field name="principal_amount"/>
+                <field name="remaining_principal"/>
+                <field name="end_date"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'running'"
+                       decoration-muted="state == 'closed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cn_loan_pivot" model="ir.ui.view">
+        <field name="name">account.cn.loan.pivot</field>
+        <field name="model">account.cn.loan</field>
+        <field name="arch" type="xml">
+            <pivot string="借款台账">
+                <field name="loan_type" type="row"/>
+                <field name="state" type="col"/>
+                <field name="remaining_principal" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_account_cn_loan_form" model="ir.ui.view">
+        <field name="name">account.cn.loan.form</field>
+        <field name="model">account.cn.loan</field>
+        <field name="arch" type="xml">
+            <form string="借款">
+                <header>
+                    <button name="action_confirm" type="object" string="确认借款"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_close" type="object" string="结清"
+                            invisible="state != 'running'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="借款名称"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="loan_type" readonly="state != 'draft'"/>
+                            <field name="principal_amount" readonly="state != 'draft'"/>
+                            <field name="start_date" readonly="state != 'draft'"/>
+                            <field name="end_date" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="repayment_method" readonly="state != 'draft'"/>
+                            <field name="annual_interest_rate" readonly="state != 'draft'"/>
+                            <field name="total_periods" readonly="state != 'draft'"/>
+                            <field name="monthly_payment" readonly="1" invisible="repayment_method != 'equal_installment'"/>
+                            <field name="repaid_periods" readonly="1"/>
+                            <field name="remaining_principal" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="journal_id" readonly="state != 'draft'"/>
+                            <field name="loan_account_id" readonly="state != 'draft'"/>
+                            <field name="interest_expense_account_id" readonly="state != 'draft'"/>
+                            <field name="current_portion_account_id"
+                                   invisible="loan_type != 'long_term'" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="move_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="还款计提明细" name="repayment_lines">
+                            <field name="repayment_line_ids" readonly="1">
+                                <list>
+                                    <field name="period_date"/>
+                                    <field name="principal_amount"/>
+                                    <field name="interest_amount"/>
+                                    <field name="move_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_loan" model="ir.actions.act_window">
+        <field name="name">借款管理</field>
+        <field name="res_model">account.cn.loan</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <menuitem id="menu_cn_loan_root"
+              name="借款管理"
+              parent="account.menu_finance"
+              sequence="13"
+              groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_cn_loan_list"
+              name="借款"
+              parent="menu_cn_loan_root"
+              action="action_account_cn_loan"
+              sequence="1"/>
+
+</odoo>

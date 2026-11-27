@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- 每次安装/升级本模块都会重新执行一遍，确保科目名称始终是标准中文 -->
+        <function model="account.account" name="_cn_apply_standard_account_names"/>
+    </data>
+</odoo>

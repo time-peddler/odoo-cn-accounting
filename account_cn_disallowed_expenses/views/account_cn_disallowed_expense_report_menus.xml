@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_cn_disallowed_expense_report" model="ir.actions.client">
+        <field name="name">纳税调整/不可抵扣费用报表</field>
+        <field name="tag">account_cn_disallowed_expense_report</field>
+    </record>
+
+    <menuitem id="menu_cn_disallowed_expense_report"
+              name="纳税调整/不可抵扣费用报表"
+              parent="account.account_reports_taxes_and_fiscal_menu"
+              action="action_cn_disallowed_expense_report"
+              sequence="30"/>
+
+</odoo>

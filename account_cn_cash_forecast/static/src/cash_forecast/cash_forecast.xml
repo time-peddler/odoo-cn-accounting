@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <t t-name="account_cn_cash_forecast.CashForecast">
+        <div class="o_cn_cash_forecast">
+            <div class="o_cn_cash_forecast_toolbar d-flex align-items-center gap-3 p-3 border-bottom">
+                <h4 class="mb-0">资金计划与现金流预测</h4>
+                <label class="mb-0">
+                    起始日期
+                    <input type="date" class="form-control form-control-sm d-inline-block w-auto ms-1"
+                           t-model="state.dateFrom" t-on-change="onFilterChanged"/>
+                </label>
+                <label class="mb-0">
+                    截止日期
+                    <input type="date" class="form-control form-control-sm d-inline-block w-auto ms-1"
+                           t-model="state.dateTo" t-on-change="onFilterChanged"/>
+                </label>
+                <label class="mb-0">
+                    分桶方式
+                    <select class="form-select form-select-sm d-inline-block w-auto ms-1"
+                            t-model="state.bucket" t-on-change="onFilterChanged">
+                        <option value="week">按周</option>
+                        <option value="month">按月</option>
+                    </select>
+                </label>
+                <span t-if="state.loading" class="fa fa-spin fa-spinner"/>
+            </div>
+
+            <div class="o_cn_cash_forecast_body">
+                <table class="o_cn_cash_forecast_table table table-sm">
+                    <thead>
+                        <tr>
+                            <th>期间</th>
+                            <th class="text-end">预计流入</th>
+                            <th class="text-end">预计流出</th>
+                            <th class="text-end">净额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="state.rows" t-as="row" t-key="row.label">
+                            <tr>
+                                <td t-esc="row.label"/>
+                                <td class="text-end" t-esc="formatAmount(row.inflow)"/>
+                                <td class="text-end" t-esc="formatAmount(row.outflow)"/>
+                                <td class="text-end fw-bold" t-esc="formatAmount(row.net)"/>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tfoot>
+                        <tr class="o_cn_cash_forecast_totals">
+                            <td>合计</td>
+                            <td class="text-end" t-esc="formatAmount(state.totals.inflow)"/>
+                            <td class="text-end" t-esc="formatAmount(state.totals.outflow)"/>
+                            <td class="text-end" t-esc="formatAmount(state.totals.net)"/>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </t>
+</template>

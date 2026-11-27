@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- 每次安装/升级都会重新执行，按 l10n_cn 科目表自动回填未配置的票据相关科目 -->
+        <function model="res.company" name="_cn_set_default_bill_accounts"/>
+    </data>
+</odoo>

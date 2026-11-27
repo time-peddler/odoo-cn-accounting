@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <t t-name="account_cn_statements.StatementReport">
+        <div class="o_cn_statement_report">
+            <div class="o_cn_statement_toolbar d-flex align-items-center gap-3 p-3 border-bottom">
+                <h4 class="mb-0" t-esc="state.statementName"/>
+                <label class="mb-0">
+                    起始日期
+                    <input type="date" class="form-control form-control-sm d-inline-block w-auto ms-1"
+                           t-model="state.dateFrom" t-on-change="onDateChanged"/>
+                </label>
+                <label class="mb-0">
+                    截止日期
+                    <input type="date" class="form-control form-control-sm d-inline-block w-auto ms-1"
+                           t-model="state.dateTo" t-on-change="onDateChanged"/>
+                </label>
+                <div class="form-check mb-0">
+                    <input type="checkbox" class="form-check-input" id="cn_statement_cmp"
+                           t-att-checked="state.comparison" t-on-change="onToggleComparison"/>
+                    <label class="form-check-label" for="cn_statement_cmp">对比上年同期</label>
+                </div>
+                <span t-if="state.loading" class="fa fa-spin fa-spinner"/>
+            </div>
+
+            <div class="o_cn_statement_body">
+                <table class="o_cn_statement_table table table-sm">
+                    <thead>
+                        <tr>
+                            <th>项目</th>
+                            <th class="text-end">本期金额</th>
+                            <th t-if="state.comparison" class="text-end">上年同期金额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="state.lines" t-as="line" t-key="line.id">
+                            <tr t-att-class="line.is_subtotal ? 'o_cn_statement_subtotal' : ''">
+                                <td>
+                                    <span t-attf-style="padding-left: {{line.level * 20}}px"
+                                          t-att-class="isClickable(line) ? 'o_cn_statement_link' : ''"
+                                          t-on-click="() => this.onLineClick(line)"
+                                          t-esc="line.name"/>
+                                </td>
+                                <td class="text-end" t-esc="formatAmount(line.current)"/>
+                                <td t-if="state.comparison" class="text-end" t-esc="formatAmount(line.comparison)"/>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+</template>

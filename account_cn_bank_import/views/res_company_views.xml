@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_cn_bank_import" model="ir.ui.view">
+        <field name="name">res.company.form.cn.bank.import</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <page name="general_info" position="after">
+                <page string="银行对账单导入" name="cn_bank_import">
+                    <group>
+                        <field name="cn_bank_import_suspense_account_id" options="{'no_create': True}"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>

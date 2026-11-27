@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_budget_list" model="ir.ui.view">
+        <field name="name">account.cn.budget.list</field>
+        <field name="model">account.cn.budget</field>
+        <field name="arch" type="xml">
+            <list string="预算">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="user_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'"
+                       decoration-info="state == 'submitted'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cn_budget_form" model="ir.ui.view">
+        <field name="name">account.cn.budget.form</field>
+        <field name="model">account.cn.budget</field>
+        <field name="arch" type="xml">
+            <form string="预算">
+                <header>
+                    <button name="action_submit" type="object" string="提交审批"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="审批通过"
+                            class="btn-primary" invisible="state != 'submitted'"/>
+                    <button name="action_reject" type="object" string="驳回"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_reset_to_draft" type="object" string="重置为编制中"
+                            invisible="state != 'approved'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="预算名称"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="user_id" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="预算明细" name="budget_lines">
+                            <field name="budget_line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="analytic_account_id"/>
+                                    <field name="account_code_prefixes"/>
+                                    <field name="budget_type"/>
+                                    <field name="planned_amount"/>
+                                    <field name="actual_amount" readonly="1"/>
+                                    <field name="committed_amount" readonly="1"/>
+                                    <field name="available_amount" readonly="1"/>
+                                    <field name="usage_rate" widget="percentage" readonly="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_budget" model="ir.actions.act_window">
+        <field name="name">预算</field>
+        <field name="res_model">account.cn.budget</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cn_budget_root"
+              name="预算管理"
+              parent="account.menu_finance"
+              sequence="11"
+              groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_cn_budget_list"
+              name="预算"
+              parent="menu_cn_budget_root"
+              action="action_account_cn_budget"
+              sequence="1"/>
+
+</odoo>

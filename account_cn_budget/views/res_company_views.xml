@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_cn_budget" model="ir.ui.view">
+        <field name="name">res.company.form.cn.budget</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <page name="general_info" position="after">
+                <page string="预算管理" name="cn_budget">
+                    <group>
+                        <field name="cn_budget_hard_block"/>
+                        <field name="cn_budget_allow_self_approve"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>

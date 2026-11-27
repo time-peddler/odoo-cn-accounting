@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_cn_budget_approver" model="res.groups">
+        <field name="name">预算审批人</field>
+        <field name="privilege_id" ref="account.res_groups_privilege_accounting"/>
+        <field name="comment">可以审批/驳回预算。</field>
+    </record>
+
+    <record id="group_cn_budget_override" model="res.groups">
+        <field name="name">预算超支审批人</field>
+        <field name="privilege_id" ref="account.res_groups_privilege_accounting"/>
+        <field name="comment">超出已审批预算余额时，仍可确认采购订单、审批费用报销。</field>
+    </record>
+
+    <record id="account.group_account_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_cn_budget_approver')), (4, ref('group_cn_budget_override'))]"/>
+    </record>
+
+</odoo>

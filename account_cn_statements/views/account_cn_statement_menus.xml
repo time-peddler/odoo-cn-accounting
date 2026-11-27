@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 中文化 Odoo 核心菜单标签（这两个菜单是 account 模块自带的，
+         我们的三张报表挂在其下，一并中文化以保持界面统一） -->
+    <record id="account.menu_finance_reports" model="ir.ui.menu">
+        <field name="name">报表</field>
+    </record>
+    <record id="account.account_reports_legal_statements_menu" model="ir.ui.menu">
+        <field name="name">财务报表</field>
+    </record>
+
+    <record id="action_cn_statement_balance_sheet" model="ir.actions.client">
+        <field name="name">资产负债表</field>
+        <field name="tag">account_cn_statement_report</field>
+        <field name="params" eval="{'statement_code': 'balance_sheet'}"/>
+    </record>
+
+    <record id="action_cn_statement_income_statement" model="ir.actions.client">
+        <field name="name">利润表</field>
+        <field name="tag">account_cn_statement_report</field>
+        <field name="params" eval="{'statement_code': 'income_statement'}"/>
+    </record>
+
+    <record id="action_cn_statement_cash_flow" model="ir.actions.client">
+        <field name="name">现金流量表</field>
+        <field name="tag">account_cn_statement_report</field>
+        <field name="params" eval="{'statement_code': 'cash_flow'}"/>
+    </record>
+
+    <menuitem id="menu_cn_statement_balance_sheet"
+              name="资产负债表"
+              parent="account.account_reports_legal_statements_menu"
+              action="action_cn_statement_balance_sheet"
+              sequence="1"/>
+    <menuitem id="menu_cn_statement_income_statement"
+              name="利润表"
+              parent="account.account_reports_legal_statements_menu"
+              action="action_cn_statement_income_statement"
+              sequence="2"/>
+    <menuitem id="menu_cn_statement_cash_flow"
+              name="现金流量表"
+              parent="account.account_reports_legal_statements_menu"
+              action="action_cn_statement_cash_flow"
+              sequence="3"/>
+
+    <!-- 现金流量项目：配置入口 -->
+    <record id="view_cn_cash_flow_item_list" model="ir.ui.view">
+        <field name="name">account.cn.cash.flow.item.list</field>
+        <field name="model">account.cn.cash.flow.item</field>
+        <field name="arch" type="xml">
+            <list string="现金流量项目" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="flow_direction"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cn_cash_flow_item_form" model="ir.ui.view">
+        <field name="name">account.cn.cash.flow.item.form</field>
+        <field name="model">account.cn.cash.flow.item</field>
+        <field name="arch" type="xml">
+            <form string="现金流量项目">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="category"/>
+                        <field name="flow_direction"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cn_cash_flow_item" model="ir.actions.act_window">
+        <field name="name">现金流量项目</field>
+        <field name="res_model">account.cn.cash.flow.item</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cn_cash_flow_item"
+              name="现金流量项目"
+              parent="account.account_account_menu"
+              action="action_cn_cash_flow_item"
+              groups="account.group_account_manager"
+              sequence="15"/>
+
+</odoo>

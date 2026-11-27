@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_cn_voucher_reviewer" model="res.groups">
+        <field name="name">凭证审核员</field>
+        <field name="privilege_id" ref="account.res_groups_privilege_accounting"/>
+        <field name="comment">可以审核/反审核记账凭证。</field>
+    </record>
+
+    <record id="account.group_account_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_cn_voucher_reviewer'))]"/>
+    </record>
+
+</odoo>

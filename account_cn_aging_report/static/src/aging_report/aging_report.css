@@ -1,0 +1,30 @@
+.o_cn_aging_report {
+    height: 100%;
+    overflow: auto;
+    background: var(--o-view-background-color, #fff);
+}
+
+.o_cn_aging_body {
+    padding: 24px 32px;
+    overflow-x: auto;
+}
+
+.o_cn_aging_table th,
+.o_cn_aging_table td {
+    padding: 4px 12px;
+    white-space: nowrap;
+}
+
+.o_cn_aging_totals td {
+    font-weight: 600;
+    border-top: 1px solid #999;
+}
+
+.o_cn_aging_link {
+    cursor: pointer;
+    color: var(--o-brand-primary, #714B67);
+}
+
+.o_cn_aging_link:hover {
+    text-decoration: underline;
+}

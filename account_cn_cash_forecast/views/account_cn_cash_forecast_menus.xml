@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_cn_cash_forecast" model="ir.actions.client">
+        <field name="name">资金计划与现金流预测</field>
+        <field name="tag">account_cn_cash_forecast</field>
+    </record>
+
+    <menuitem id="menu_cn_cash_forecast"
+              name="资金计划与现金流预测"
+              parent="account.account_reports_management_menu"
+              action="action_cn_cash_forecast"
+              sequence="10"/>
+
+</odoo>

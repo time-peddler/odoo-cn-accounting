@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_asset_list" model="ir.ui.view">
+        <field name="name">account.cn.asset.list</field>
+        <field name="model">account.cn.asset</field>
+        <field name="arch" type="xml">
+            <list string="固定资产" decoration-muted="state in ('disposed', 'written_off')">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="department_id"/>
+                <field name="method"/>
+                <field name="original_value" sum="原值合计"/>
+                <field name="accumulated_depreciation" sum="累计折旧合计"/>
+                <field name="accumulated_impairment" sum="累计减值合计"/>
+                <field name="net_book_value" sum="账面净值合计"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'running'"
+                       decoration-muted="state in ('disposed', 'written_off')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cn_asset_pivot" model="ir.ui.view">
+        <field name="name">account.cn.asset.pivot</field>
+        <field name="model">account.cn.asset</field>
+        <field name="arch" type="xml">
+            <pivot string="固定资产台账汇总">
+                <field name="category_id" type="row"/>
+                <field name="department_id" type="row"/>
+                <field name="original_value" type="measure"/>
+                <field name="accumulated_depreciation" type="measure"/>
+                <field name="accumulated_impairment" type="measure"/>
+                <field name="net_book_value" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_account_cn_asset_search" model="ir.ui.view">
+        <field name="name">account.cn.asset.search</field>
+        <field name="model">account.cn.asset</field>
+        <field name="arch" type="xml">
+            <search string="固定资产">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                <field name="department_id"/>
+                <filter string="草稿" name="state_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="使用中" name="state_running" domain="[('state', '=', 'running')]"/>
+                <filter string="已处置/已核销" name="state_closed" domain="[('state', 'in', ('disposed', 'written_off'))]"/>
+                <group>
+                    <filter string="资产类别" name="group_category" context="{'group_by': 'category_id'}"/>
+                    <filter string="使用部门" name="group_department" context="{'group_by': 'department_id'}"/>
+                    <filter string="状态" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_account_cn_asset_form" model="ir.ui.view">
+        <field name="name">account.cn.asset.form</field>
+        <field name="model">account.cn.asset</field>
+        <field name="arch" type="xml">
+            <form string="固定资产">
+                <header>
+                    <button name="action_confirm" type="object" string="确认启用"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object" string="重置为草稿"
+                            invisible="state != 'running' or depreciated_months &gt; 0"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="category_id"/>
+                            <field name="department_id"/>
+                            <field name="company_id" options="{'no_create': True}"/>
+                            <field name="purchase_date"/>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="original_value"/>
+                            <field name="salvage_rate"/>
+                            <field name="salvage_value"/>
+                            <field name="useful_life_years"/>
+                            <field name="total_workload" invisible="method != 'workload'"/>
+                            <field name="method"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="accumulated_depreciation" readonly="1"/>
+                            <field name="accumulated_impairment" readonly="1"/>
+                            <field name="net_book_value" readonly="1"/>
+                            <field name="depreciated_months" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="折旧计提明细" name="depreciation_lines">
+                            <field name="depreciation_line_ids" readonly="1">
+                                <list>
+                                    <field name="period_date"/>
+                                    <field name="workload_amount" column_invisible="parent.method != 'workload'"/>
+                                    <field name="depreciation_amount"/>
+                                    <field name="move_id"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="调拨记录" name="transfers">
+                            <field name="transfer_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="old_department_id" readonly="1"/>
+                                    <field name="new_department_id"/>
+                                    <field name="reason"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="减值记录" name="impairments">
+                            <field name="impairment_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="reason"/>
+                                    <field name="move_id" readonly="1"/>
+                                    <field name="state" widget="badge"/>
+                                    <button name="action_post" type="object" string="过账"
+                                            invisible="state == 'posted'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_asset" model="ir.actions.act_window">
+        <field name="name">固定资产</field>
+        <field name="res_model">account.cn.asset</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="search_view_id" ref="view_account_cn_asset_search"/>
+        <field name="context">{'search_default_state_running': 1}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_vat_return_form" model="ir.ui.view">
+        <field name="name">account.cn.vat.return.form</field>
+        <field name="model">account.cn.vat.return</field>
+        <field name="arch" type="xml">
+            <form string="增值税及附加税费申报表">
+                <header>
+                    <button name="action_generate" type="object" string="生成/重新生成"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_confirm" type="object" string="确认"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object" string="重置为编制中"
+                            invisible="state != 'confirmed'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True}"/>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="增值税" name="vat">
+                            <group>
+                                <group>
+                                    <field name="opening_credit" readonly="state != 'draft'"/>
+                                    <field name="output_vat_amount" readonly="1"/>
+                                    <field name="input_vat_amount" readonly="1"/>
+                                    <field name="input_vat_transferred_out" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="deductible_vat_total" readonly="1"/>
+                                    <field name="payable_vat_amount" readonly="1"/>
+                                    <field name="closing_credit" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="附加税费" name="surcharges">
+                            <group>
+                                <field name="urban_maintenance_tax" readonly="1"/>
+                                <field name="education_surcharge" readonly="1"/>
+                                <field name="local_education_surcharge" readonly="1"/>
+                                <field name="surcharge_total" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_cn_vat_return_list" model="ir.ui.view">
+        <field name="name">account.cn.vat.return.list</field>
+        <field name="model">account.cn.vat.return</field>
+        <field name="arch" type="xml">
+            <list string="增值税及附加税费申报表">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="payable_vat_amount"/>
+                <field name="surcharge_total"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'confirmed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_account_cn_vat_return" model="ir.actions.act_window">
+        <field name="name">增值税及附加税费申报表</field>
+        <field name="res_model">account.cn.vat.return</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_account_cn_vat_return"
+              name="增值税及附加税费申报表"
+              parent="account.account_reports_taxes_and_fiscal_menu"
+              action="action_account_cn_vat_return"
+              sequence="10"/>
+
+</odoo>

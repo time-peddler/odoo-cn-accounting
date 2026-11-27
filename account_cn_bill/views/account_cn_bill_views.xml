@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_bill_list" model="ir.ui.view">
+        <field name="name">account.cn.bill.list</field>
+        <field name="model">account.cn.bill</field>
+        <field name="arch" type="xml">
+            <list string="票据">
+                <field name="name"/>
+                <field name="bill_type"/>
+                <field name="note_type"/>
+                <field name="partner_id"/>
+                <field name="amount"/>
+                <field name="issue_date"/>
+                <field name="maturity_date"/>
+                <field name="state" widget="badge"
+                       decoration-info="state in ('draft', 'held')"
+                       decoration-success="state == 'settled'"
+                       decoration-warning="state in ('endorsed', 'discounted')"
+                       decoration-danger="state == 'dishonored'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cn_bill_pivot" model="ir.ui.view">
+        <field name="name">account.cn.bill.pivot</field>
+        <field name="model">account.cn.bill</field>
+        <field name="arch" type="xml">
+            <pivot string="票据台账">
+                <field name="note_type" type="row"/>
+                <field name="state" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_account_cn_bill_search" model="ir.ui.view">
+        <field name="name">account.cn.bill.search</field>
+        <field name="model">account.cn.bill</field>
+        <field name="arch" type="xml">
+            <search string="票据">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter name="receivable" string="应收票据" domain="[('bill_type', '=', 'receivable')]"/>
+                <filter name="payable" string="应付票据" domain="[('bill_type', '=', 'payable')]"/>
+                <filter name="held" string="持有中" domain="[('state', '=', 'held')]"/>
+                <group>
+                    <filter name="group_note_type" string="票据种类" context="{'group_by': 'note_type'}"/>
+                    <filter name="group_state" string="状态" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_account_cn_bill_form" model="ir.ui.view">
+        <field name="name">account.cn.bill.form</field>
+        <field name="model">account.cn.bill</field>
+        <field name="arch" type="xml">
+            <form string="票据">
+                <header>
+                    <button name="action_confirm" type="object" string="确认"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_open_endorse_wizard" type="object" string="背书转让"
+                            invisible="bill_type != 'receivable' or state != 'held'"/>
+                    <button name="action_open_discount_wizard" type="object" string="贴现"
+                            invisible="bill_type != 'receivable' or state != 'held'"/>
+                    <button name="action_collect" type="object" string="到期兑付"
+                            invisible="bill_type != 'receivable' or state != 'held'"/>
+                    <button name="action_pay" type="object" string="到期支付"
+                            invisible="bill_type != 'payable' or state != 'held'"/>
+                    <button name="action_dishonor" type="object" string="拒付冲回"
+                            confirm="确认要冲回本次结算，把票据恢复为持有中吗？"
+                            invisible="state not in ('endorsed', 'discounted')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,held,settled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="票据号码"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="bill_type" readonly="state != 'draft'"/>
+                            <field name="note_type" readonly="state != 'draft'"/>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="amount" readonly="state != 'draft'"/>
+                            <field name="issue_date" readonly="state != 'draft'"/>
+                            <field name="maturity_date" readonly="state != 'draft'"/>
+                            <field name="drawee_info"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="journal_id" readonly="state != 'draft'"/>
+                            <field name="bank_journal_id"/>
+                        </group>
+                        <group>
+                            <field name="invoice_ids" readonly="state != 'draft'"
+                                   domain="[('partner_id', '=', partner_id), ('state', '=', 'posted'), ('payment_state', 'not in', ('paid', 'in_payment'))]"
+                                   widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="move_id" readonly="1"/>
+                        <field name="settlement_move_id" readonly="1" invisible="not settlement_move_id"/>
+                        <field name="dishonor_move_id" readonly="1" invisible="not dishonor_move_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_bill" model="ir.actions.act_window">
+        <field name="name">票据管理</field>
+        <field name="res_model">account.cn.bill</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <menuitem id="menu_cn_bill_root"
+              name="票据管理"
+              parent="account.menu_finance"
+              sequence="12"
+              groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_cn_bill_list"
+              name="票据"
+              parent="menu_cn_bill_root"
+              action="action_account_cn_bill"
+              sequence="1"/>
+
+</odoo>

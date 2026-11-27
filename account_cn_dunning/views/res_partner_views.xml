@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_cn_dunning" model="ir.ui.view">
+        <field name="name">res.partner.form.cn.dunning</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='credit_limits']" position="after">
+                <group string="催款管理" name="cn_dunning"
+                       groups="account.group_account_invoice,account.group_account_readonly">
+                    <field name="cn_dunning_exempt"/>
+                    <field name="cn_dunning_level_id" readonly="1"/>
+                    <field name="cn_dunning_total_overdue" widget="monetary"
+                           options="{'currency_field': 'currency_id'}" readonly="1"/>
+                    <field name="cn_dunning_last_level_id" readonly="1"/>
+                    <field name="cn_dunning_last_sent_date" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_cn_dunning_run_check" model="ir.actions.server">
+        <field name="name">立即执行催款检查</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_cn_run_dunning_check()</field>
+    </record>
+
+    <menuitem id="menu_cn_dunning_run_check"
+              name="立即执行催款检查"
+              parent="account.account_reports_partners_reports_menu"
+              action="action_cn_dunning_run_check"
+              groups="account.group_account_invoice"
+              sequence="10"/>
+
+</odoo>

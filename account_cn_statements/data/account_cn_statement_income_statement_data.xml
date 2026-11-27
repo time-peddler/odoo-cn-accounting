@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="statement_income_statement" model="account.cn.statement">
+            <field name="name">利润表</field>
+            <field name="code">income_statement</field>
+        </record>
+
+        <record id="is_operating_revenue" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">10</field>
+            <field name="code">OPERATING_REVENUE</field>
+            <field name="name">一、营业收入</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6001,6041,6051</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="is_operating_cost" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">20</field>
+            <field name="code">OPERATING_COST</field>
+            <field name="name">减：营业成本</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6401,6402</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_taxes_surcharges" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">30</field>
+            <field name="code">TAXES_SURCHARGES</field>
+            <field name="name">税金及附加</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6403</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_selling_expenses" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">40</field>
+            <field name="code">SELLING_EXPENSES</field>
+            <field name="name">销售费用</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6601</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_admin_expenses" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">50</field>
+            <field name="code">ADMIN_EXPENSES</field>
+            <field name="name">管理费用</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6602</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_rd_expenses" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">60</field>
+            <field name="code">RD_EXPENSES</field>
+            <field name="name">研发费用</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">5301</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_finance_expenses" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">70</field>
+            <field name="code">FINANCE_EXPENSES</field>
+            <field name="name">财务费用</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6603</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_finance_expenses_interest" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="parent_id" ref="is_finance_expenses"/>
+            <field name="sequence">10</field>
+            <field name="code">FINANCE_EXPENSES_INTEREST</field>
+            <field name="name">其中：利息费用</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6603.01</field>
+            <field name="balance_side">debit</field>
+            <field name="note">仅作明细展示，不重复计入合计</field>
+        </record>
+        <record id="is_finance_expenses_interest_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="parent_id" ref="is_finance_expenses"/>
+            <field name="sequence">20</field>
+            <field name="code">FINANCE_EXPENSES_INTEREST_INCOME</field>
+            <field name="name">利息收入</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6603.02</field>
+            <field name="balance_side">credit</field>
+            <field name="note">仅作明细展示，不重复计入合计</field>
+        </record>
+        <record id="is_other_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">80</field>
+            <field name="code">OTHER_INCOME</field>
+            <field name="name">加：其他收益</field>
+            <field name="line_type">detail</field>
+            <field name="balance_side">credit</field>
+            <field name="note">标准科目表未提供对应科目（如政府补助），如有需要请在技术设置中补充科目编码</field>
+        </record>
+        <record id="is_investment_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">90</field>
+            <field name="code">INVESTMENT_INCOME</field>
+            <field name="name">投资收益</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6111</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="is_fair_value_change_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">100</field>
+            <field name="code">FAIR_VALUE_CHANGE_INCOME</field>
+            <field name="name">公允价值变动收益</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6101</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="is_credit_impairment_loss" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">110</field>
+            <field name="code">CREDIT_IMPAIRMENT_LOSS</field>
+            <field name="name">信用减值损失</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6721</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_asset_impairment_loss" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">120</field>
+            <field name="code">ASSET_IMPAIRMENT_LOSS</field>
+            <field name="name">资产减值损失</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6701</field>
+            <field name="balance_side">debit</field>
+        </record>
+        <record id="is_asset_disposal_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">130</field>
+            <field name="code">ASSET_DISPOSAL_INCOME</field>
+            <field name="name">资产处置收益</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6115</field>
+            <field name="balance_side">credit</field>
+        </record>
+
+        <record id="is_operating_profit" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">140</field>
+            <field name="code">OPERATING_PROFIT</field>
+            <field name="name">二、营业利润</field>
+            <field name="line_type">formula</field>
+            <field name="formula">OPERATING_REVENUE - OPERATING_COST - TAXES_SURCHARGES - SELLING_EXPENSES - ADMIN_EXPENSES - RD_EXPENSES - FINANCE_EXPENSES + OTHER_INCOME + INVESTMENT_INCOME + FAIR_VALUE_CHANGE_INCOME - CREDIT_IMPAIRMENT_LOSS - ASSET_IMPAIRMENT_LOSS + ASSET_DISPOSAL_INCOME</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="is_non_operating_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">150</field>
+            <field name="code">NON_OPERATING_INCOME</field>
+            <field name="name">加：营业外收入</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6301</field>
+            <field name="balance_side">credit</field>
+        </record>
+        <record id="is_non_operating_expense" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">160</field>
+            <field name="code">NON_OPERATING_EXPENSE</field>
+            <field name="name">减：营业外支出</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6711</field>
+            <field name="balance_side">debit</field>
+        </record>
+
+        <record id="is_total_profit" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">170</field>
+            <field name="code">TOTAL_PROFIT</field>
+            <field name="name">三、利润总额</field>
+            <field name="line_type">formula</field>
+            <field name="formula">OPERATING_PROFIT + NON_OPERATING_INCOME - NON_OPERATING_EXPENSE</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="is_income_tax_expense" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">180</field>
+            <field name="code">INCOME_TAX_EXPENSE</field>
+            <field name="name">减：所得税费用</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">6801</field>
+            <field name="balance_side">debit</field>
+        </record>
+
+        <record id="is_net_profit" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">190</field>
+            <field name="code">NET_PROFIT</field>
+            <field name="name">四、净利润</field>
+            <field name="line_type">formula</field>
+            <field name="formula">TOTAL_PROFIT - INCOME_TAX_EXPENSE</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="is_oci_net_of_tax" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">200</field>
+            <field name="code">OCI_NET_OF_TAX</field>
+            <field name="name">五、其他综合收益的税后净额</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">4003</field>
+            <field name="balance_side">credit</field>
+            <field name="note">取本期发生额</field>
+        </record>
+
+        <record id="is_total_comprehensive_income" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_income_statement"/>
+            <field name="sequence">210</field>
+            <field name="code">TOTAL_COMPREHENSIVE_INCOME</field>
+            <field name="name">六、综合收益总额</field>
+            <field name="line_type">formula</field>
+            <field name="formula">NET_PROFIT + OCI_NET_OF_TAX</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+    </data>
+</odoo>

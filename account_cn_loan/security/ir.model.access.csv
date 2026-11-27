@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_cn_loan_user,account.cn.loan.user,model_account_cn_loan,account.group_account_invoice,1,1,1,0
+access_account_cn_loan_manager,account.cn.loan.manager,model_account_cn_loan,account.group_account_manager,1,1,1,1
+access_account_cn_loan_repayment_line_user,account.cn.loan.repayment.line.user,model_account_cn_loan_repayment_line,account.group_account_invoice,1,1,1,0
+access_account_cn_loan_repayment_line_manager,account.cn.loan.repayment.line.manager,model_account_cn_loan_repayment_line,account.group_account_manager,1,1,1,1
+access_account_cn_loan_repayment_wizard,account.cn.loan.repayment.wizard,model_account_cn_loan_repayment_wizard,account.group_account_invoice,1,1,1,1
+access_account_cn_loan_repayment_wizard_line,account.cn.loan.repayment.wizard.line,model_account_cn_loan_repayment_wizard_line,account.group_account_invoice,1,1,1,1

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <t t-name="account_cn_disallowed_expenses.DisallowedExpenseReport">
+        <div class="o_cn_disallowed_report">
+            <div class="o_cn_disallowed_toolbar d-flex align-items-center gap-3 p-3 border-bottom">
+                <h4 class="mb-0">纳税调整/不可抵扣费用报表</h4>
+                <label class="mb-0">
+                    起始日期
+                    <input type="date" class="form-control form-control-sm d-inline-block w-auto ms-1"
+                           t-model="state.dateFrom" t-on-change="onDateChanged"/>
+                </label>
+                <label class="mb-0">
+                    截止日期
+                    <input type="date" class="form-control form-control-sm d-inline-block w-auto ms-1"
+                           t-model="state.dateTo" t-on-change="onDateChanged"/>
+                </label>
+                <span t-if="state.loading" class="fa fa-spin fa-spinner"/>
+            </div>
+
+            <div class="o_cn_disallowed_body">
+                <table class="o_cn_disallowed_table table table-sm">
+                    <thead>
+                        <tr>
+                            <th>纳税调整类别</th>
+                            <th class="text-end">实际发生额</th>
+                            <th class="text-end">可扣除限额</th>
+                            <th class="text-end">纳税调整增加额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="state.rows" t-as="row" t-key="row.category_id">
+                            <tr>
+                                <td t-esc="row.category_name"/>
+                                <td class="text-end o_cn_disallowed_cell"
+                                    t-att-class="row.actual_amount ? 'o_cn_disallowed_link' : ''"
+                                    t-on-click="() => this.onCellClick(row)"
+                                    t-esc="formatAmount(row.actual_amount)"/>
+                                <td class="text-end" t-esc="formatAmount(row.deductible_amount)"/>
+                                <td class="text-end fw-bold" t-esc="formatAmount(row.adjustment_amount)"/>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tfoot>
+                        <tr class="o_cn_disallowed_totals">
+                            <td>合计</td>
+                            <td class="text-end" t-esc="formatAmount(state.totals.actual_amount)"/>
+                            <td class="text-end" t-esc="formatAmount(state.totals.deductible_amount)"/>
+                            <td class="text-end" t-esc="formatAmount(state.totals.adjustment_amount)"/>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </t>
+</template>

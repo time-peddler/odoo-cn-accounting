@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_income_tax_prepayment_form" model="ir.ui.view">
+        <field name="name">account.cn.income.tax.prepayment.form</field>
+        <field name="model">account.cn.income.tax.prepayment</field>
+        <field name="arch" type="xml">
+            <form string="企业所得税季度预缴测算">
+                <header>
+                    <button name="action_generate" type="object" string="生成/重新生成"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_confirm" type="object" string="确认"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object" string="重置为编制中"
+                            invisible="state != 'confirmed'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True}"/>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="cumulative_profit" readonly="1"/>
+                            <field name="tax_adjustment_amount" readonly="state != 'draft'"/>
+                            <field name="prior_year_loss_offset" readonly="state != 'draft'"/>
+                            <field name="taxable_income" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="prior_prepaid_cumulative" readonly="1"/>
+                            <field name="tax_payable_cumulative" readonly="1"/>
+                            <field name="current_quarter_tax_due" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_cn_income_tax_prepayment_list" model="ir.ui.view">
+        <field name="name">account.cn.income.tax.prepayment.list</field>
+        <field name="model">account.cn.income.tax.prepayment</field>
+        <field name="arch" type="xml">
+            <list string="企业所得税季度预缴测算">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="date_to"/>
+                <field name="taxable_income"/>
+                <field name="current_quarter_tax_due"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'confirmed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_account_cn_income_tax_prepayment" model="ir.actions.act_window">
+        <field name="name">企业所得税季度预缴测算</field>
+        <field name="res_model">account.cn.income.tax.prepayment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_account_cn_income_tax_prepayment"
+              name="企业所得税季度预缴测算"
+              parent="account.account_reports_taxes_and_fiscal_menu"
+              action="action_account_cn_income_tax_prepayment"
+              sequence="20"/>
+
+</odoo>

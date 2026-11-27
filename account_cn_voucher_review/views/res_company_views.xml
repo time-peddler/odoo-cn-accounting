@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_cn_review" model="ir.ui.view">
+        <field name="name">res.company.form.cn.review</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <page name="general_info" position="after">
+                <page string="凭证审核" name="cn_voucher_review">
+                    <group>
+                        <field name="cn_voucher_review_enabled"/>
+                        <field name="cn_voucher_review_allow_self"
+                               invisible="not cn_voucher_review_enabled"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>

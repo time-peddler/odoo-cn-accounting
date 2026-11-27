@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="statement_cash_flow" model="account.cn.statement">
+            <field name="name">现金流量表</field>
+            <field name="code">cash_flow</field>
+        </record>
+
+        <!-- ============ 一、经营活动产生的现金流量 ============ -->
+        <record id="cf_sec_operating" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="sequence">10</field>
+            <field name="code">OPERATING_SEC</field>
+            <field name="name">一、经营活动产生的现金流量：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="cf_sales_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">10</field>
+            <field name="code">CF_SALES_CASH</field>
+            <field name="name">销售商品、提供劳务收到的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_sales_cash"/>
+        </record>
+        <record id="cf_tax_refund" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">20</field>
+            <field name="code">CF_TAX_REFUND</field>
+            <field name="name">收到的税费返还</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_tax_refund"/>
+        </record>
+        <record id="cf_other_operating_in" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">30</field>
+            <field name="code">CF_OTHER_OPERATING_IN</field>
+            <field name="name">收到其他与经营活动有关的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_other_operating_in"/>
+        </record>
+        <record id="cf_purchase_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">40</field>
+            <field name="code">CF_PURCHASE_CASH</field>
+            <field name="name">购买商品、接受劳务支付的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_purchase_cash"/>
+        </record>
+        <record id="cf_employee_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">50</field>
+            <field name="code">CF_EMPLOYEE_CASH</field>
+            <field name="name">支付给职工以及为职工支付的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_employee_cash"/>
+        </record>
+        <record id="cf_tax_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">60</field>
+            <field name="code">CF_TAX_CASH</field>
+            <field name="name">支付的各项税费</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_tax_cash"/>
+        </record>
+        <record id="cf_other_operating_out" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">70</field>
+            <field name="code">CF_OTHER_OPERATING_OUT</field>
+            <field name="name">支付其他与经营活动有关的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_other_operating_out"/>
+        </record>
+        <record id="cf_net_operating" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_operating"/>
+            <field name="sequence">80</field>
+            <field name="code">NET_OPERATING_CF</field>
+            <field name="name">经营活动产生的现金流量净额</field>
+            <field name="line_type">formula</field>
+            <field name="formula">CF_SALES_CASH + CF_TAX_REFUND + CF_OTHER_OPERATING_IN - CF_PURCHASE_CASH - CF_EMPLOYEE_CASH - CF_TAX_CASH - CF_OTHER_OPERATING_OUT</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <!-- ============ 二、投资活动产生的现金流量 ============ -->
+        <record id="cf_sec_investing" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="sequence">20</field>
+            <field name="code">INVESTING_SEC</field>
+            <field name="name">二、投资活动产生的现金流量：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="cf_investment_recovery" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">10</field>
+            <field name="code">CF_INVESTMENT_RECOVERY</field>
+            <field name="name">收回投资收到的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_investment_recovery"/>
+        </record>
+        <record id="cf_investment_income_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">20</field>
+            <field name="code">CF_INVESTMENT_INCOME_CASH</field>
+            <field name="name">取得投资收益收到的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_investment_income_cash"/>
+        </record>
+        <record id="cf_disposal_assets_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">30</field>
+            <field name="code">CF_DISPOSAL_ASSETS_CASH</field>
+            <field name="name">处置固定资产、无形资产和其他长期资产收回的现金净额</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_disposal_assets_cash"/>
+        </record>
+        <record id="cf_other_investing_in" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">40</field>
+            <field name="code">CF_OTHER_INVESTING_IN</field>
+            <field name="name">收到其他与投资活动有关的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_other_investing_in"/>
+        </record>
+        <record id="cf_build_assets_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">50</field>
+            <field name="code">CF_BUILD_ASSETS_CASH</field>
+            <field name="name">购建固定资产、无形资产和其他长期资产支付的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_build_assets_cash"/>
+        </record>
+        <record id="cf_investment_pay_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">60</field>
+            <field name="code">CF_INVESTMENT_PAY_CASH</field>
+            <field name="name">投资支付的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_investment_pay_cash"/>
+        </record>
+        <record id="cf_other_investing_out" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">70</field>
+            <field name="code">CF_OTHER_INVESTING_OUT</field>
+            <field name="name">支付其他与投资活动有关的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_other_investing_out"/>
+        </record>
+        <record id="cf_net_investing" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_investing"/>
+            <field name="sequence">80</field>
+            <field name="code">NET_INVESTING_CF</field>
+            <field name="name">投资活动产生的现金流量净额</field>
+            <field name="line_type">formula</field>
+            <field name="formula">CF_INVESTMENT_RECOVERY + CF_INVESTMENT_INCOME_CASH + CF_DISPOSAL_ASSETS_CASH + CF_OTHER_INVESTING_IN - CF_BUILD_ASSETS_CASH - CF_INVESTMENT_PAY_CASH - CF_OTHER_INVESTING_OUT</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <!-- ============ 三、筹资活动产生的现金流量 ============ -->
+        <record id="cf_sec_financing" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="sequence">30</field>
+            <field name="code">FINANCING_SEC</field>
+            <field name="name">三、筹资活动产生的现金流量：</field>
+            <field name="line_type">section</field>
+        </record>
+
+        <record id="cf_capital_raised_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_financing"/>
+            <field name="sequence">10</field>
+            <field name="code">CF_CAPITAL_RAISED_CASH</field>
+            <field name="name">吸收投资收到的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_capital_raised_cash"/>
+        </record>
+        <record id="cf_borrowing_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_financing"/>
+            <field name="sequence">20</field>
+            <field name="code">CF_BORROWING_CASH</field>
+            <field name="name">取得借款收到的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_borrowing_cash"/>
+        </record>
+        <record id="cf_other_financing_in" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_financing"/>
+            <field name="sequence">30</field>
+            <field name="code">CF_OTHER_FINANCING_IN</field>
+            <field name="name">收到其他与筹资活动有关的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_other_financing_in"/>
+        </record>
+        <record id="cf_debt_repayment_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_financing"/>
+            <field name="sequence">40</field>
+            <field name="code">CF_DEBT_REPAYMENT_CASH</field>
+            <field name="name">偿还债务支付的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_debt_repayment_cash"/>
+        </record>
+        <record id="cf_dividend_interest_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_financing"/>
+            <field name="sequence">50</field>
+            <field name="code">CF_DIVIDEND_INTEREST_CASH</field>
+            <field name="name">分配股利、利润或偿付利息支付的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_dividend_interest_cash"/>
+        </record>
+        <record id="cf_other_financing_out" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_financing"/>
+            <field name="sequence">60</field>
+            <field name="code">CF_OTHER_FINANCING_OUT</field>
+            <field name="name">支付其他与筹资活动有关的现金</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_other_financing_out"/>
+        </record>
+        <record id="cf_net_financing" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="parent_id" ref="cf_sec_financing"/>
+            <field name="sequence">70</field>
+            <field name="code">NET_FINANCING_CF</field>
+            <field name="name">筹资活动产生的现金流量净额</field>
+            <field name="line_type">formula</field>
+            <field name="formula">CF_CAPITAL_RAISED_CASH + CF_BORROWING_CASH + CF_OTHER_FINANCING_IN - CF_DEBT_REPAYMENT_CASH - CF_DIVIDEND_INTEREST_CASH - CF_OTHER_FINANCING_OUT</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <!-- ============ 四、汇率变动影响 / 五、六、期初期末余额 ============ -->
+        <record id="cf_fx_effect" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="sequence">40</field>
+            <field name="code">CF_FX_EFFECT</field>
+            <field name="name">四、汇率变动对现金及现金等价物的影响</field>
+            <field name="line_type">cash_flow</field>
+            <field name="cash_flow_item_id" ref="cf_item_fx_effect"/>
+        </record>
+
+        <record id="cf_net_increase_cash" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="sequence">50</field>
+            <field name="code">NET_INCREASE_CASH</field>
+            <field name="name">五、现金及现金等价物净增加额</field>
+            <field name="line_type">formula</field>
+            <field name="formula">NET_OPERATING_CF + NET_INVESTING_CF + NET_FINANCING_CF + CF_FX_EFFECT</field>
+            <field name="is_subtotal">1</field>
+        </record>
+
+        <record id="cf_cash_end_balance" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="sequence">70</field>
+            <field name="code">CASH_END_BALANCE</field>
+            <field name="name">六、期末现金及现金等价物余额</field>
+            <field name="line_type">detail</field>
+            <field name="account_code_prefixes">1001,1002,1012</field>
+            <field name="balance_side">debit</field>
+        </record>
+
+        <record id="cf_cash_begin_balance" model="account.cn.statement.line">
+            <field name="statement_id" ref="statement_cash_flow"/>
+            <field name="sequence">60</field>
+            <field name="code">CASH_BEGIN_BALANCE</field>
+            <field name="name">加：期初现金及现金等价物余额</field>
+            <field name="line_type">formula</field>
+            <field name="formula">CASH_END_BALANCE - NET_INCREASE_CASH</field>
+            <field name="note">由期末余额与本期净增加额反算，可用于核对现金流量项目打标是否完整</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_bank_import_wizard_form" model="ir.ui.view">
+        <field name="name">account.cn.bank.import.wizard.form</field>
+        <field name="model">account.cn.bank.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="银行对账单导入">
+                <group>
+                    <group>
+                        <field name="journal_id"/>
+                        <field name="attachment" filename="attachment_filename"/>
+                        <field name="attachment_filename" invisible="1"/>
+                    </group>
+                    <group string="列表头映射（按实际文件表头调整）">
+                        <field name="col_date"/>
+                        <field name="col_label"/>
+                        <field name="col_income"/>
+                        <field name="col_expense"/>
+                        <field name="col_partner_name"/>
+                    </group>
+                </group>
+                <field name="line_ids" invisible="not line_ids">
+                    <list editable="bottom">
+                        <field name="selected"/>
+                        <field name="date"/>
+                        <field name="label"/>
+                        <field name="amount"/>
+                        <field name="partner_name"/>
+                        <field name="partner_id"/>
+                        <field name="currency_id" column_invisible="1"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_preview" type="object" string="解析预览" class="btn-secondary"/>
+                    <button name="action_import" type="object" string="确认导入" class="btn-primary"
+                            invisible="not line_ids"/>
+                    <button string="取消" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_bank_import_wizard" model="ir.actions.act_window">
+        <field name="name">银行对账单导入</field>
+        <field name="res_model">account.cn.bank.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_cn_bank_import_wizard"
+              name="银行对账单导入"
+              parent="account.menu_finance_entries"
+              action="action_account_cn_bank_import_wizard"
+              sequence="15"/>
+
+</odoo>

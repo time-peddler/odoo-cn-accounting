@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cn_asset_disposal_wizard_form" model="ir.ui.view">
+        <field name="name">account.cn.asset.disposal.wizard.form</field>
+        <field name="model">account.cn.asset.disposal.wizard</field>
+        <field name="arch" type="xml">
+            <form string="固定资产处置清理">
+                <group>
+                    <field name="asset_ids" widget="many2many_tags"
+                           domain="[('state', '=', 'running')]"/>
+                    <field name="disposal_date"/>
+                    <field name="disposal_income"/>
+                    <field name="disposal_expense"/>
+                    <field name="payment_account_id"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="确认处置" class="btn-primary"/>
+                    <button string="取消" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cn_asset_disposal_wizard" model="ir.actions.act_window">
+        <field name="name">固定资产处置清理</field>
+        <field name="res_model">account.cn.asset.disposal.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

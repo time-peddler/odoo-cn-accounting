@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_move_tree_cn_review" model="ir.ui.view">
+        <field name="name">account.move.list.cn.review</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="checked" position="after">
+                <field name="cn_review_required" column_invisible="True"/>
+                <field name="cn_review_state"
+                       widget="badge"
+                       optional="show"
+                       decoration-warning="cn_review_state == 'to_review'"
+                       decoration-success="cn_review_state == 'reviewed'"
+                       invisible="not cn_review_required"/>
+                <field name="cn_reviewed_by" optional="hide" invisible="not cn_review_required"/>
+                <field name="cn_reviewed_date" optional="hide" invisible="not cn_review_required"/>
+                <button name="action_cn_review" type="object" string="审核"
+                        groups="account_cn_voucher_review.group_cn_voucher_reviewer"
+                        invisible="not cn_review_required or cn_review_state != 'to_review'"/>
+                <button name="action_cn_unreview" type="object" string="反审核"
+                        groups="account_cn_voucher_review.group_cn_voucher_reviewer"
+                        invisible="not cn_review_required or cn_review_state != 'reviewed' or state != 'draft'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_form_cn_review" model="ir.ui.view">
+        <field name="name">account.move.form.cn.review</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_post'][1]" position="after">
+                <button name="action_cn_review" type="object" string="审核"
+                        class="btn-primary"
+                        groups="account_cn_voucher_review.group_cn_voucher_reviewer"
+                        invisible="not cn_review_required or cn_review_state != 'to_review'"/>
+                <button name="action_cn_unreview" type="object" string="反审核"
+                        groups="account_cn_voucher_review.group_cn_voucher_reviewer"
+                        invisible="not cn_review_required or cn_review_state != 'reviewed' or state != 'draft'"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <field name="cn_review_required" invisible="1"/>
+                <field name="cn_review_state" widget="badge"
+                       invisible="not cn_review_required"
+                       decoration-warning="cn_review_state == 'to_review'"
+                       decoration-success="cn_review_state == 'reviewed'"/>
+                <span invisible="not cn_review_required or cn_review_state != 'reviewed'">
+                    审核人：<field name="cn_reviewed_by" readonly="1" nolabel="1" class="oe_inline"/>
+                    审核时间：<field name="cn_reviewed_date" readonly="1" nolabel="1" class="oe_inline"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_server_cn_voucher_review" model="ir.actions.server">
+        <field name="name">批量审核</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_cn_review()</field>
+    </record>
+
+    <record id="action_server_cn_voucher_unreview" model="ir.actions.server">
+        <field name="name">批量反审核</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_cn_unreview()</field>
+    </record>
+
+</odoo>

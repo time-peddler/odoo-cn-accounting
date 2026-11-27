@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <t t-name="account_cn_aging_report.AgingReport">
+        <div class="o_cn_aging_report">
+            <div class="o_cn_aging_toolbar d-flex align-items-center gap-3 p-3 border-bottom">
+                <h4 class="mb-0" t-esc="title"/>
+                <label class="mb-0">
+                    截止日期
+                    <input type="date" class="form-control form-control-sm d-inline-block w-auto ms-1"
+                           t-model="state.asOfDate" t-on-change="onDateChanged"/>
+                </label>
+                <span t-if="state.loading" class="fa fa-spin fa-spinner"/>
+            </div>
+
+            <div class="o_cn_aging_body">
+                <table class="o_cn_aging_table table table-sm">
+                    <thead>
+                        <tr>
+                            <th>往来单位</th>
+                            <t t-foreach="state.bucketLabels" t-as="label" t-key="label">
+                                <th class="text-end" t-esc="label"/>
+                            </t>
+                            <th class="text-end">合计</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="state.rows" t-as="row" t-key="row.partner_id">
+                            <tr>
+                                <td t-esc="row.partner_name"/>
+                                <t t-foreach="row.buckets" t-as="amount" t-key="amount_index">
+                                    <td class="text-end o_cn_aging_cell"
+                                        t-att-class="amount ? 'o_cn_aging_link' : ''"
+                                        t-on-click="() => this.onCellClick(row, amount_index)"
+                                        t-esc="formatAmount(amount)"/>
+                                </t>
+                                <td class="text-end fw-bold" t-esc="formatAmount(row.total)"/>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tfoot>
+                        <tr class="o_cn_aging_totals">
+                            <td>合计</td>
+                            <t t-foreach="state.totals" t-as="amount" t-key="amount_index">
+                                <td class="text-end" t-esc="formatAmount(amount)"/>
+                            </t>
+                            <td class="text-end" t-esc="formatAmount(state.grandTotal)"/>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </t>
+</template>

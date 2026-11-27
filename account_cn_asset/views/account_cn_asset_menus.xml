@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_cn_asset_root"
+              name="固定资产"
+              parent="account.menu_finance"
+              sequence="10"
+              groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_cn_asset_list"
+              name="固定资产"
+              parent="menu_cn_asset_root"
+              action="action_account_cn_asset"
+              sequence="1"/>
+
+    <menuitem id="menu_cn_asset_depreciation_wizard"
+              name="批量计提折旧"
+              parent="menu_cn_asset_root"
+              action="action_account_cn_asset_depreciation_wizard"
+              sequence="2"/>
+
+    <menuitem id="menu_cn_asset_disposal_wizard"
+              name="处置清理"
+              parent="menu_cn_asset_root"
+              action="action_account_cn_asset_disposal_wizard"
+              sequence="3"
+              groups="account.group_account_manager"/>
+
+    <menuitem id="menu_cn_asset_transfer"
+              name="调拨记录"
+              parent="menu_cn_asset_root"
+              action="action_account_cn_asset_transfer"
+              sequence="4"/>
+
+    <menuitem id="menu_cn_asset_impairment"
+              name="减值记录"
+              parent="menu_cn_asset_root"
+              action="action_account_cn_asset_impairment"
+              sequence="5"/>
+
+    <menuitem id="menu_cn_asset_inventory_count"
+              name="盘点盈亏"
+              parent="menu_cn_asset_root"
+              action="action_account_cn_asset_inventory_count"
+              sequence="6"/>
+
+    <menuitem id="menu_cn_asset_category"
+              name="资产类别"
+              parent="menu_cn_asset_root"
+              action="action_account_cn_asset_category"
+              sequence="7"
+              groups="account.group_account_manager"/>
+
+</odoo>
